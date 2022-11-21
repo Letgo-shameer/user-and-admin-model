@@ -1,0 +1,119 @@
+<%- include('../layout/head.ejs') %>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+
+            </ul>
+            <!-- <button class="btn btn-danger" type="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Logout
+            </button> -->
+
+            <form action="/admin/logout" method="post">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+            
+        </div>
+    </div>
+</nav>
+
+    <div class="container">
+        <!-- <input class="form-control me-2" id="myInput" type="text" placeholder="Search" aria-label="Search" onkeyup="myFunction()"> -->
+        
+          <div class="row mt-5 justify-content-center">
+          
+          
+            <div class="input-group mb-3">
+                   <a href="/admin/addUser"> <button class="btn btn-primary">Add User</button></a>
+                  
+              <div style="position: absolute; right: 0px; width: 300px;">
+                <input style="align-items: flex-end" type="text" id="myInput" class="form-control" onkeyup="myFunction()" placeholder="Search..."/>
+              </div>
+            </div>
+  
+              <table class="table table-hover" id="myTable">
+                  <thead>
+                      <tr>
+                          <th scope="col">Sl No</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Password</th>
+                          <th scope="col">Edit</th>
+                          <th scope="col">Delete</th>
+                      </tr>
+                  </thead>
+  
+                  <% for(let i=0; i<users.length; i++) { %> 
+                  <tbody>
+                      <tr>
+                          <th scope="row"><%= i+1 %>  </th>
+                          <td><%= users[i].name %> </td>
+                          <td><%= users[i].email %> </td>
+                          <td><%= users[i].password %> </td>
+                          <td><a href="/admin/editUser?id=<%= users[i]._id %>"><button type="button" class="btn-logout btn-info" style="background: none; border: none;"><i class="fa-solid fa-pen-to-square"></i></button></a></td>
+                          <form action="/admin/deleteUser?id=<%= users[i]._id %>" method="post">
+                            <td><button onclick="deleteUser()" class="btn-logout btn-danger" style="border: none; background: none;"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                          </form>
+                      </tr>
+                  </tbody>
+                  <% } %> 
+              </table>
+          </div>
+      </div>
+   
+      
+  
+      <!-- Modal -->
+      <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel" style="color: black">Logout</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body" style="color: black">
+                      Session will be lost. Are You Sure to Log Out?
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn-logout btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <a href="/admin/logout"><button type="button" class="btn-logout btn-danger">Logout</button></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  -->
+  
+  <script>
+    function myFunction() {
+      let input = document.getElementById("myInput");
+      let filter = input.value.toUpperCase();
+      let table = document.getElementById("myTable");
+      let tr = table.getElementsByTagName("tr");
+      for (let i = 0; i < tr.length; i++) {
+          let td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          let txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }       
+      }
+    }
+  
+    function deleteUser() {
+      alert("Are you sure to delete")
+    }
+  
+    </script>
+  
+
+<%- include('../layout/foot.ejs') %>
